@@ -43,7 +43,7 @@ This function should only modify configuration layer settings."
                       better-defaults-move-to-end-of-code-first t
                       )
      emacs-lisp
-     ;; git
+     git
      helm
      ;; markdown
      multiple-cursors
@@ -53,7 +53,7 @@ This function should only modify configuration layer settings."
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
+     syntax-checking
      treemacs
      python
      ;; version-control
