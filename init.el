@@ -32,8 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(html
-     ;; ----------------------------------------------------------------
+   '(;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
@@ -63,6 +62,14 @@ This function should only modify configuration layer settings."
           osx-command-as       'meta
           osx-option-as        'none
           )
+     (html :variables
+           css-indent-offset 2
+           web-mode-markup-indent-offset 2
+           web-mode-css-indent-offset 2
+           web-mode-code-indent-offset 2
+           web-mode-attr-indent-offset 2
+           web-mode-engines-alist '(("django"    . "\\.html\\'"))
+           )
      (c-c++ :variables
             c-c++-backend 'lsp-cquery
             c++-enable-organize-includes-on-save t
