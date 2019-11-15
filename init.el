@@ -54,7 +54,13 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      syntax-checking
      treemacs
-     python
+     (python :variables
+             python-backend 'lsp        ; python-lsp-server 'mspyls
+             python-lsp-server 'pyls
+             python-sort-imports-on-save t
+             python-formatter 'black
+             python-format-on-save t
+             )
      ;; version-control
      themes-megapack
      django
@@ -80,6 +86,19 @@ This function should only modify configuration layer settings."
             )
      (sql :variables
           sql-capitalize-keywords t
+          )
+     (auto-completion :variables
+                      ;; auto-completion-enable-snippets-in-popup t
+                      auto-completion-return-key-behavior nil
+                      auto-completion-tab-key-behavior 'complete
+                      auto-completion-enable-help-tooltip t  ;; M-h ile oto açma
+                      auto-completion-idle-delay 0
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-use-company-box t
+                      )
+     (lsp :variables
+                                        ; lsp-ui-sideline-enable nil
           )
      )
 
