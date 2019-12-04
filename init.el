@@ -1,6 +1,7 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
-;; It must be stored in your home directory.
+                                        ;
+                                        ; It must be stored in your home directory.
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
@@ -32,12 +33,22 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(;; ----------------------------------------------------------------
+   '(javascript
+     ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      ;; auto-completion-enable-snippets-in-popup t
+                      auto-completion-return-key-behavior nil
+                      auto-completion-tab-key-behavior 'complete
+                      auto-completion-enable-help-tooltip t  ;; M-h ile oto açma
+                      auto-completion-idle-delay 0
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-use-company-box t
+                      )
      (better-defaults :variables
                       better-defaults-move-to-end-of-code-first t
                       )
@@ -45,7 +56,9 @@ This function should only modify configuration layer settings."
      git
      helm
      ;; markdown
-     multiple-cursors
+     (multiple-cursors :variables
+                       multiple-cursors-backend 'mc
+                       )
      (org :variables
           org-enable-bootstrap-support t)
      ;; (shell :variables
@@ -82,7 +95,6 @@ This function should only modify configuration layer settings."
             c-c++-enable-clang-format-on-save t
             ;; c-c++-enable-google-style t ??
             ;; c-c++-enable-google-newline t ??
-            c-c++-enable-auto-newline t ;; ??
             )
      (sql :variables
           sql-capitalize-keywords t
@@ -502,6 +514,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; Indentations
   (setq-default c-basic-offset 4)
   (setq lsp-enable-indentation nil)
+  (setq truncate-lines t)
   )
 
 (defun dotspacemacs/user-load ()
@@ -534,6 +547,21 @@ before packages are loaded."
   ;; Kill ringi göster
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
+  ;; Multiple cursors next
+  (global-set-key (kbd "C-M-n") 'mc/mark-next-like-this)
+  ;; Multiple cursors previous
+  (global-set-key (kbd "C-M-p") 'mc/mark-previous-like-this)
+  ;; Multiple cursors skip next
+  (global-set-key (kbd "C-M-S-n") 'mc/skip-to-next-like-this)
+  ;; Multiple cursors skip previous
+  (global-set-key (kbd "C-M-S-p") 'mc/skip-to-previous-like-this)
+  ;; Multiple cursors unmark last
+  (global-set-key (kbd "C-S-n") 'mc/unmark-previous-like-this)
+  ;; Multiple cursors unmark first
+  (global-set-key (kbd "C-S-p") 'mc/unmark-next-like-this)
+  ;; Multiple cursors add cursor on click
+  (global-set-key (kbd "C-M-<mouse-1>") 'mc/add-cursor-on-click)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -550,6 +578,8 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#2f2f2d" "#ffb4ac" "#8ac6f2" "#e5c06d" "#a4b5e6" "#e5786d" "#7ec98f" "#74736e"])
+ '(company-quickhelp-color-background "#4F4F4F")
+ '(company-quickhelp-color-foreground "#DCDCCC")
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#7ec98f")
  '(cua-normal-cursor-color "#8c8b85")
@@ -557,7 +587,7 @@ This function is called at the very end of Spacemacs initialization."
  '(cua-read-only-cursor-color "#8ac6f2")
  '(custom-safe-themes
    (quote
-    ("7152ab5bf548cc6215efc513442e7bb59de9eff4b5737eaed3a1a4f42789612c" "82358261c32ebedfee2ca0f87299f74008a2e5ba5c502bde7aaa15db20ee3731" default)))
+    ("f11e219c9d043cbd5f4b2e01713c2c24a948a98bed48828dc670bd64ae771aa1" "947190b4f17f78c39b0ab1ea95b1e6097cc9202d55c73a702395fc817f899393" "70ed3a0f434c63206a23012d9cdfbe6c6d4bb4685ad64154f37f3c15c10f3b90" "6124d0d4205ae5ab279b35ac6bc6a180fbb5ca594616e1e9a22097024c0a8a99" "cdb4ffdecc682978da78700a461cdc77456c3a6df1c1803ae2dd55c59fa703e3" "a2cde79e4cc8dc9a03e7d9a42fabf8928720d420034b66aecc5b665bbf05d4e9" "2d1fe7c9007a5b76cea4395b0fc664d0c1cfd34bb4f1860300347cdad67fb2f9" "d6f04b6c269500d8a38f3fabadc1caa3c8fdf46e7e63ee15605af75a09d5441e" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "9271c0ad73ef29af016032376d36e8aed4e89eff17908c0b578c33e54dfa1da1" "7152ab5bf548cc6215efc513442e7bb59de9eff4b5737eaed3a1a4f42789612c" "82358261c32ebedfee2ca0f87299f74008a2e5ba5c502bde7aaa15db20ee3731" default)))
  '(evil-want-Y-yank-to-eol nil)
  '(fci-rule-color "#2f2f2d" t)
  '(fringe-mode 6 nil (fringe))
@@ -588,10 +618,32 @@ This function is called at the very end of Spacemacs initialization."
    (quote
     ("#00FF99" "#CCFF99" "#FFCC99" "#FF9999" "#FF99CC" "#CC99FF" "#9999FF" "#99CCFF" "#99FFCC" "#7FFF00")))
  '(hl-paren-colors (quote ("#7ec98f" "#e5c06d" "#a4b5e6" "#834c98" "#8ac6f2")))
+ '(hl-todo-keyword-faces
+   (quote
+    (("TODO" . "#dc752f")
+     ("NEXT" . "#dc752f")
+     ("THEM" . "#2d9574")
+     ("PROG" . "#3a81c3")
+     ("OKAY" . "#3a81c3")
+     ("DONT" . "#f2241f")
+     ("FAIL" . "#f2241f")
+     ("DONE" . "#42ae2c")
+     ("NOTE" . "#b1951d")
+     ("KLUDGE" . "#b1951d")
+     ("HACK" . "#b1951d")
+     ("TEMP" . "#b1951d")
+     ("FIXME" . "#dc752f")
+     ("XXX+" . "#dc752f")
+     ("\\?\\?\\?+" . "#dc752f"))))
+ '(jdee-db-active-breakpoint-face-colors (cons "#191C25" "#80A0C2"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#191C25" "#A2BF8A"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#191C25" "#434C5E"))
  '(linum-format " %7d ")
+ '(magit-diff-use-overlays nil)
  '(nrepl-message-colors
    (quote
     ("#ffb4ac" "#ddaa6f" "#e5c06d" "#3d454c" "#e2e9ea" "#40424a" "#7ec98f" "#e5786d" "#834c98")))
+ '(objed-cursor-color "#C16069")
  '(org-src-block-faces
    (quote
     (("emacs-lisp"
@@ -600,7 +652,8 @@ This function is called at the very end of Spacemacs initialization."
       (:foreground "gray50")))))
  '(package-selected-packages
    (quote
-    (nord-theme web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode htmlize simple-httpd helm-css-scss haml-mode emmet-mode counsel-css counsel swiper ivy company-web web-completion-data add-node-modules-path yasnippet-snippets helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
+    (tern nodejs-repl livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc import-js grizzl helm-gtags ggtags counsel-gtags nord-theme web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode htmlize simple-httpd helm-css-scss haml-mode emmet-mode counsel-css counsel swiper ivy company-web web-completion-data add-node-modules-path yasnippet-snippets helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(pos-tip-background-color "#2f2f2d")
  '(pos-tip-foreground-color "#999791")
  '(smartrep-mode-line-active-bg (solarized-color-blend "#8ac6f2" "#2f2f2d" 0.2))
