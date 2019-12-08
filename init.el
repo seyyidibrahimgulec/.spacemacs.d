@@ -112,6 +112,7 @@ This function should only modify configuration layer settings."
      (lsp :variables
                                         ; lsp-ui-sideline-enable nil
           )
+     restclient
      )
 
 
