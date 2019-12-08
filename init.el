@@ -125,6 +125,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       exec-path-from-shell
+                                      beacon
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -513,10 +514,14 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
+
   ;; Indentations
   (setq-default c-basic-offset 4)
   (setq lsp-enable-indentation nil)
   (setq truncate-lines t)
+
+  ;; Beacon
+  (setq-default beacon-color "#009900")
   )
 
 (defun dotspacemacs/user-load ()
@@ -573,7 +578,7 @@ before packages are loaded."
     ;; Run source code blocks without asking
     (setq org-confirm-babel-evaluate nil)
     )
-
+  (beacon-mode 1)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
