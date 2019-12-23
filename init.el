@@ -113,6 +113,7 @@ This function should only modify configuration layer settings."
                                         ; lsp-ui-sideline-enable nil
           )
      restclient
+     spotify
      )
 
 
